@@ -1,6 +1,8 @@
 # ECLIPSE // P2S
 
 *Beneath the Eclipse, nothing remains hidden.*
+<img width="3456" height="2218" alt="Screenshot 2026-10-23 at 10 06 57 PM-clean" src="https://github.com/user-attachments/assets/75dd12fc-83b1-423b-9548-630cd8601641" />
+
 
 ECLIPSE // P2S is a local, zero-dependency terminal auditor for PHP2Shell version exposure. It reads the PHP version a website reports in ordinary HTTP response headers, compares it with a bundled snapshot of the October 2026 PHP security fixes, and prints a version-based triage assessment with its evidence. It never sends exploit payloads and never claims a vulnerability is confirmed.
 
@@ -10,33 +12,8 @@ The interface is a keyboard-driven `curses` application styled after a cursed Un
 
 A scan ends on **THE BRAND**, a compact screen built to be read in seconds and to fit 80x24. *The layout below is illustrative; the values are an example, not an observation of any real server.*
 
-```text
-+--------------------------------------------------------------------------+
-| ECLIPSE // P2S                                                    v1.0.0 |
-|--------------------------------------------------------------------------|
-|  THE BRAND                                                               |
-|                                                                          |
-|  TARGET     https://example.com                                          |
-|  PHP        8.3.35                                                       |
-|                                                                          |
-|  ----------------------------------------------------------------------  |
-|                                                                          |
-|                                95 / 100                                  |
-|                                                                          |
-|                           POTENTIAL EXPOSURE                             |
-|                                                                          |
-|  ----------------------------------------------------------------------  |
-|  FIRST FIX  PHP 8.3.36                                                   |
-|                                                                          |
-|  THE OMEN                                                                |
-|  Reported PHP version predates the upstream fix.                         |
-|  Actual exploitability has not been verified.                            |
-|                                                                          |
-|  Version-based assessment only. See details for limitations.             |
-|--------------------------------------------------------------------------|
-| [N] NEW   [D] DETAILS   [E] EXPORT   [Q] QUIT                            |
-+--------------------------------------------------------------------------+
-```
+<img width="3456" height="2218" alt="Screenshot 2026-10-23 at 10 06 50 PM-clean" src="https://github.com/user-attachments/assets/e857ea80-6eeb-4e99-9f03-253bc65d2e15" />
+
 
 The score is the centerpiece: crimson for *potential exposure*, desaturated green for *original fix threshold met*, amber for *inconclusive* / *legacy* / *unknown coverage*. Inconclusive results show `N/A`, never a made-up number, and no fixed version. On terminals of about 30 rows or more the score is drawn in large block digits; on short terminals optional lines are dropped, but the score, classification and the key footer always stay.
 
