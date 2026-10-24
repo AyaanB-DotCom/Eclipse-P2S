@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "database_version": "2026.10.23",
+  "last_reviewed": "2026-10-23",
+  "research_cutoff": "2026-10-23",
+  "snapshot_notice": "Historical, manually maintained snapshot. It is never updated automatically and may be out of date.",
+  "initial_disclosure": "2026-10-21",
+  "primary_scope": [
+    {
+      "cve": "CVE-2026-109618",
+      "ghsa": "GHSA-w8hw-w9fx-j79w",
+      "title": "Remote code execution through out-of-memory state corruption",
+      "cvss_v4": 9.2,
+      "summary": "An out-of-memory error path that used longjmp() could leave request data partially initialized; request shutdown could then act on invalid memory state. Apache mod_php was the most significant confirmed concern.",
+      "url": "https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w"
+    },
+    {
+      "cve": "CVE-2026-109619",
+      "ghsa": "GHSA-6wmf-4rv5-p3rp",
+      "title": "Remote code execution through stale global state / use-after-free",
+      "cvss_v4": 9.2,
+      "summary": "Worker-level global state could keep references to per-request memory after it was freed, allowing a later request to use stale state. Exploitation depends on PHP configuration, worker behaviour and environment.",
+      "url": "https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp"
+    }
+  ],
+  "fixed_upstream_versions": {
+    "8.2": "8.2.35",
+    "8.3": "8.3.36",
+    "8.4": "8.4.27",
+    "8.5": "8.5.12"
+  },
+  "last_prefix_versions": {
+    "8.2": "8.2.34",
+    "8.3": "8.3.35",
+    "8.4": "8.4.26",
+    "8.5": "8.5.11"
+  },
+  "legacy_policy": {
+    "status": "vendor_patch_verification_required",
+    "max_branch": "8.1",
+    "upstream_fixed_release": null,
+    "notes": "PHP 8.1 and older are end-of-life upstream and received no ordinary release in the October 21 security release. The PHP security team provided minimal source backports for 7.4, 8.0 and 8.1, and some operating-system or extended-support vendors ship patched packages that keep the original upstream version number (for example patched 7.4.33, 8.0.30 and 8.1.34 builds in Plesk guidance of October 22). The version number alone cannot establish patch status."
+  },
+  "scoring": {
+    "potential_exposure": 95,
+    "legacy_patch_review": 90,
+    "threshold_met": 0
+  },
+  "related_advisories": [
+    {
+      "cve": "CVE-2026-115560",
+      "date": "2026-10-23",
+      "status_as_of_review": "full advisory and fixed versions not yet published; fix planned for a future bugfix release",
+      "fixed_version": null,
+      "included_in_primary_score": false,
+      "summary": "A separate session upload progress issue announced on 2026-10-23. It is not resolved by the October 21 fixed releases. Per PHP's guidance it needs an unusual combination: session.serialize_handler configured as php_binary or php_serialize, application code switching the handler to php with ini_set(), a later session_start(), and session upload progress still enabled.",
+      "notice_text": "A separate session upload progress issue was announced on October 23, 2026. Its exposure depends on server configuration and application behavior. ECLIPSE cannot determine exposure to this issue from HTTP version information alone. The October 21 fixed releases do not resolve it.",
+      "mitigation": "Review session upload progress configuration. PHP recommends session.upload_progress.enabled=0 for potentially affected configurations until the next regular bugfix release; applications that never change the session serialize handler at runtime can keep it enabled."
+    }
+  ],
+  "mitigations": [
+    "Update to a fixed upstream release or to a vendor package confirmed to include the CVE-2026-109618 and CVE-2026-109619 fixes. This is the only complete remediation.",
+    "CVE-2026-109618 partial reduction: administratively enforcing memory_limit=-1 can reduce one confirmed attack path; request and multipart size limits can reduce exposure to some resource exhaustion scenarios.",
+    "CVE-2026-109619 partial reduction: disabling session.upload_progress.enabled (set in php.ini, FPM pool or server config, then restart workers) blocks certain confirmed paths; PHP 8.5 had an additional mitigation using fatal_error_backtraces=0.",
+    "Partial mitigations do not replace the security fixes."
+  ],
+  "informational_notes": {
+    "prerelease_8_6": "PHP 8.6.0 RC4 (2026-10-21) contained fixes for both original vulnerabilities but is a testing release not intended for production. ECLIPSE does not infer production-safe status from 8.6 prerelease version strings."
+  },
+  "limitations": [
+    "A version reported in an HTTP header is self-reported and unverified; it can be missing, stale, spoofed or rewritten by a proxy.",
+    "Vendor packages may carry backported fixes while reporting an older upstream version number.",
+    "The score is a version-based triage heuristic. It is not CVSS and not a probability of exploitation; no exploitation or vulnerability test is performed.",
+    "A result that meets the original fix threshold does not make a system secure and says nothing about CVE-2026-115560.",
+    "An unknown or inconclusive result must not be read as safe.",
+    "The active PHP SAPI (mod_php, FPM, php-cgi, FrankenPHP, LSAPI) cannot be determined from generic Server headers and is not guessed."
+  ],
+  "sources": [
+    {"title": "PHP official archive 2026", "url": "https://www.php.net/archive/2026.php"},
+    {"title": "PHP security announcement, 2026-10-21", "url": "https://www.php.net/archive/2026.php#2026-10-21-1"},
+    {"title": "PHP informational advisory, 2026-10-23", "url": "https://www.php.net/archive/2026.php#2026-10-23-1"},
+    {"title": "CVE-2026-109618 (GHSA-w8hw-w9fx-j79w)", "url": "https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w"},
+    {"title": "CVE-2026-109619 (GHSA-6wmf-4rv5-p3rp)", "url": "https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp"},
+    {"title": "PHP manual: expose_php (core ini settings)", "url": "https://www.php.net/manual/en/ini.core.php"},
+    {"title": "PHP manual: hiding PHP", "url": "https://www.php.net/manual/en/security.hiding.php"},
+    {"title": "Plesk vendor guidance on backported PHP patches", "url": "https://support.plesk.com/hc/en-us/articles/44397729587351-Vulnerability-CVE-2026-109618-and-CVE-2026-109619-PHP2Shell-Remote-code-execution-in-PHP-shipped-with-Plesk"}
+  ]
+}
